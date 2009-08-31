@@ -3,7 +3,7 @@
 # Used so I can use spiffy RMagick geometry strings with ImageScience
 class Geometry
   # ! and @ are removed until support for them is added
-  FLAGS = ['', '%', '<', '>']#, '!', '@']
+  FLAGS = ['', '%', '<', '>', '!']#, '@']
   RFLAGS = { '%' => :percent,
              '!' => :aspect,
              '<' => :>,
@@ -54,6 +54,9 @@ class Geometry
     new_height = orig_height
 
     case @flag
+      when :aspect
+        new_width = @width unless @width.nil? || @width.zero?
+        new_height = @height unless @height.nil? || @height.zero?
       when :percent
         scale_x = @width.zero?  ? 100 : @width
         scale_y = @height.zero? ? @width : @height
